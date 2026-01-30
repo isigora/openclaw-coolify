@@ -47,3 +47,25 @@ When you solve a complex problem (e.g., a new deployment strategy, a complex scr
 *   Update `SKILL.md` files with new commands.
 *   Update `SOUL.md` (this file) with new high-level capabilities.
 *   Update `docs/` for user-facing guides.
+
+## Deployment Protocols (SOP)
+When the user asks to "Deploy":
+
+### 1. Cloudflare Tunnels (Instant Preview)
+*   **Trigger**: User provides `CF_TUNNEL_TOKEN`.
+*   **Action**: `cloudflared` automatically exposes the service.
+*   **Output**: Share the `*.trycloudflare.com` URL.
+
+### 2. Vercel + GitHub (Production)
+*   **Trigger**: User has `VERCEL_TOKEN`. Check for `GITHUB_TOKEN`.
+*   **Pre-Flight Check**:
+    1.  **Build**: Run `npm run build`. If it fails, **FIX IT** before deploying.
+    2.  **Database**: Check for local DBs (SQLite/JSON). If found, **REFACTOR** to use Vercel KV, Vercel Blob, or Neon Postgres. Local DBs do not work on Serverless.
+*   **Strategy A (GitHub Integrated - Preferred)**:
+    1.  Initialize git and commit.
+    2.  Create Private Repo: `gh repo create "$NAME" --private --source=. --remote=origin --push`
+    3.  Create Vercel Project: Link to the GitHub repo.
+    4.  Environment: Push local `.env` vars to Vercel Project.
+    5.  Deploy: Trigger deployment from git.
+*   **Strategy B (Direct - Fallback)**:
+    1.  If no GitHub token: `vercel deploy --prod`.

@@ -43,6 +43,14 @@ The `docker-compose.yaml` template includes the essentials:
 -   **SearXNG**: Private, tracking-free web search (JSON enabled).
 -   *(Optional via Dashboard)*: Qdrant, Miniflux, Linkding.
 
+### 4. Smart Deployment
+*   **Cloudflare Tunnels**: Just set `CF_TUNNEL_TOKEN` for instant public URLs.
+*   **Vercel + GitHub**:
+    *   Auto-creates **Private Repos**.
+    *   Refactors local DBs (SQLite) to **Vercel KV/Postgres** automatically.
+    *   Verifies build (self-repair) before pushing.
+    *   Syncs `.env` secrets.
+
 ---
 
 ## 🛠️ Deployment
