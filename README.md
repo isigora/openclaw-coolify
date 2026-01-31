@@ -1,8 +1,8 @@
-# OpenClaw (Coolify Edition)
+# OpenClaw aka (Clawdbot, MoltBot) (Coolify Edition)
 
 **Your Assistant. Your Machine. Your Rules.**
 
-OpenClaw is an open agent platform that runs on your machine and works from the chat apps you already use. WhatsApp, Telegram, Discord, Slack, Teams—wherever you are, your AI assistant follows.
+OpenClaw aka (Clawdbot, MoltBot) is an open agent platform that runs on your machine and works from the chat apps you already use. WhatsApp, Telegram, Discord, Slack, Teams—wherever you are, your AI assistant follows.
 
 Unlike SaaS assistants where your data lives on someone else’s servers, OpenClaw runs where you choose—laptop, homelab, or VPS. Your infrastructure. Your keys. Your data.
 
@@ -24,7 +24,7 @@ Once the container is running and healthy:
 1.  **Access the Dashboard**:
     - Open the **Service Logs** in Coolify.
     - Look for: `🦞 OPENCLAW READY`.
-    - You will see a **Dashboard URL** with a token (e.g., `http://.../?token=xyz`).
+    - You will see a **Dashboard URL** with a token (e.g., `https://.../?token=xyz`).
     - **Click that link** to access your OpenClaw Gateway UI.
 2.  **Approve Your Device**:
     - You will see an "Unauthorized" or pairing screen (this is normal).
