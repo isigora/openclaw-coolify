@@ -156,5 +156,37 @@ fi
 # Run OpenClaw
 # ----------------------------
 ulimit -n 65535
+# ----------------------------
+# Banner & Access Info
+# ----------------------------
+# Try to extract existing token if not already set (e.g. from previous run)
+if [ -f "$CONFIG_FILE" ]; then
+    SAVED_TOKEN=$(grep -o '"token": "[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
+    if [ -n "$SAVED_TOKEN" ]; then
+        TOKEN="$SAVED_TOKEN"
+    fi
+fi
+
+echo ""
+echo "=================================================================="
+echo "🦞 OpenClaw is ready!"
+echo "=================================================================="
+echo ""
+echo "🔑 Access Token: $TOKEN"
+echo ""
+echo "🌍 Service URL (Local): http://localhost:${OPENCLAW_GATEWAY_PORT:-18789}?token=$TOKEN"
+if [ -n "$SERVICE_FQDN_OPENCLAW" ]; then
+    echo "☁️  Service URL (Public): https://${SERVICE_FQDN_OPENCLAW}?token=$TOKEN"
+    echo "    (Wait for cloud tunnel to propagate if just started)"
+fi
+echo ""
+echo "👉 Onboarding:"
+echo "   1. Access the UI using the link above."
+echo "   2. To approve this machine, run inside the container:"
+echo "      openclaw-approve"
+echo "   3. To start the onboarding wizard:"
+echo "      openclaw onboard"
+echo ""
+echo "=================================================================="
 echo "🔧 Current ulimit is: $(ulimit -n)"
 exec openclaw gateway run
