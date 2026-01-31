@@ -488,6 +488,14 @@ if [ -d "skills/sandbox-manager" ]; then
   npx skills add ./skills/sandbox-manager >/dev/null 2>&1 || true
 fi
 
+# Ensure lowdb is available for state management
+echo "📦 Installing lowdb for state management..."
+if command -v bun >/dev/null 2>&1; then
+  bun add lowdb >/dev/null 2>&1 || true
+elif command -v npm >/dev/null 2>&1; then
+  npm install lowdb >/dev/null 2>&1 || true
+fi
+
 # Cloudflare Tunnel Auto-Start
 if [ -n "$CF_TUNNEL_TOKEN" ]; then
     echo "🚇 Starting Cloudflare Tunnel..."
