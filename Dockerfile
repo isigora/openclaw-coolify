@@ -116,8 +116,8 @@ RUN if [ "$OPENCLAW_BETA" = "true" ]; then \
     fi
 
 RUN bun pm -g untrusted
-# AI Tool Suite
-RUN bun install -g @openai/codex @google/gemini-cli opencode-ai @steipete/summarize @hyperbrowser/agent && \
+# AI Tool Suite & ClawHub
+RUN bun install -g @openai/codex @google/gemini-cli opencode-ai @steipete/summarize @hyperbrowser/agent clawhub && \
     curl -fsSL https://claude.ai/install.sh | bash && \
     curl -L https://code.kimi.com/install.sh | bash
 

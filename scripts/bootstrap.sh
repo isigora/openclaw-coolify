@@ -74,6 +74,20 @@ if [ ! -f "$CONFIG_FILE" ]; then
     "restart": true,
     "useAccessGroups": true
   },
+  "plugins": {
+    "enabled": true,
+    "entries": {
+      "whatsapp": {
+        "enabled": true
+      },
+      "telegram": {
+        "enabled": true
+      },
+      "google-antigravity-auth": {
+        "enabled": true
+      }
+    }
+  },
   "skills": {
     "allowBundled": [
       "*"

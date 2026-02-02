@@ -68,6 +68,39 @@ You can verify status or manage other channels (Discord, Slack) via the dashboar
 
 ---
 
+## 📦 ClawHub & Skills
+
+**ClawHub** is the public skill registry for OpenClaw. It allows you to easily find, install, and share capabilities for your agent.
+
+### Quick Start
+1.  **Search** for a skill:
+    ```bash
+    clawhub search "calendar"
+    ```
+2.  **Install** it:
+    ```bash
+    clawhub install <skill-slug>
+    ```
+3.  **Use it**: Restart your session, and the agent will have the new capabilities.
+
+### CLI Commands
+The `clawhub` CLI is pre-installed in your container.
+
+| Command | Description |
+| :--- | :--- |
+| `clawhub search "query"` | Find skills by name or tag. |
+| `clawhub install <slug>` | Install a skill into your workspace. |
+| `clawhub update --all` | Update all installed skills to the latest version. |
+| `clawhub login` | Login to publish your own skills. |
+| `clawhub publish` | Publish a skill from the current directory. |
+
+### How it Works
+A skill is a folder containing a `SKILL.md` (instructions) and supporting files. When you install a skill, it is downloaded to your workspace. OpenClaw automatically loads these skills, giving your agent new powers without writing code.
+
+---
+
+
+
 ## � Architecture: The AI Office
 
 Think of this Docker container not as an app, but as an **Office Building**.
