@@ -9,6 +9,8 @@ services:
   openclaw:
     build:
       context: .
+      ports:                    # ← 이 섹션 추가!
+      - "18789:18789"
       args:
         - OPENCLAW_BETA=${OPENCLAW_BETA:-false}
     restart: on-failure:10
