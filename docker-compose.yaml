@@ -11,8 +11,8 @@ services:
       context: .
       args:
         - OPENCLAW_BETA=${OPENCLAW_BETA:-false}
-      ports:
-        - "18789:18789"
+    ports:
+      - "18789:18789"
     restart: on-failure:10
     ulimits:
       nofile:
