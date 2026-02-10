@@ -155,6 +155,10 @@ Need to show a client your work?
 
 ## ❓ FAQ & Troubleshooting
 
+### Repository Scope
+*   **Q: Where should the Textree word-tree/treemap prototype live?**
+    *   **A**: The word-tree (`textree`) prototype belongs in the dedicated `textree` repository, not in `openclaw-coolify`.
+
 ### Usage
 *   **Q: How do I install extra tools like `nmap` or `ffmpeg`?**
     *   **A**: Don't edit the Dockerfile! Use **Skills**.
