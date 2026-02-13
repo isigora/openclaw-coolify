@@ -40,7 +40,7 @@ services:
       BUN_INSTALL: /data/.bun
       # Map OpenClaw vars
       OPENCLAW_GATEWAY_BIND: lan
-      OPENCLAW_GATEWAY_PORT: ${OPENCLAW_GATEWAY_PORT:-18789}
+      OPENCLAW_GATEWAY_PORT: ${OPENCLAW_GATEWAY_PORT:-18780}
       # Tell the binary where to look for state/config
       OPENCLAW_STATE_DIR: /data/.openclaw
       OPENCLAW_WORKSPACE: /data/openclaw-workspace
@@ -61,7 +61,7 @@ services:
       NANOBANANA_API_KEY: ${NANOBANANA_API_KEY}
       ELEVENLABS_API_KEY: ${ELEVENLABS_API_KEY}
 
-      SERVICE_URL_OPENCLAW_18789: null
+      SERVICE_URL_OPENCLAW_18780: null
       SERVICE_URL_OPENCLAWWEBHOOK_8788: null
       BASE_URL: 'https://${SERVICE_FQDN_OPENCLAW}'
       PUBLIC_URL: 'https://${SERVICE_FQDN_OPENCLAW}'
@@ -97,7 +97,7 @@ services:
 
     command: ["bash", "/app/scripts/bootstrap.sh"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:18789/"]
+      test: ["CMD", "curl", "-f", "http://localhost:18780/"]
       interval: 30s
       timeout: 10s
       retries: 3
