@@ -12,7 +12,7 @@ services:
       args:
         - OPENCLAW_BETA=${OPENCLAW_BETA:-false}
     ports:
-      - "18789:18789"
+      - "18780:18780"
     restart: on-failure:10
     ulimits:
       nofile:
@@ -23,7 +23,7 @@ services:
     environment:
       DOCKER_HOST: tcp://docker-proxy:2375
       OPENCLAW_ENABLE_WEBHOOK_PROXY: "1"
-      PORT: 18789
+      PORT: 18780
       NODE_ENV: production
       NODE_OPTIONS: '--max-old-space-size=4096'
       HOME: /data
