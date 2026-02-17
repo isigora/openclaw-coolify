@@ -86,7 +86,16 @@ ENV BUN_INSTALL_NODE=0 \
 # Create Bun directory and install Bun
 RUN mkdir -p /data/.bun && \
     curl -fsSL https://bun.sh/install | bash && \
-    ln -s /root/.bun/bin/bun /usr/local/bin/bun || ln -s /data/.bun/bin/bun /usr/local/bin/bun
+    # Verify Bun installation and create symlink
+    if [ -f "$HOME/.bun/bin/bun" ]; then \
+        ln -sf "$HOME/.bun/bin/bun" /usr/local/bin/bun; \
+    elif [ -f "/root/.bun/bin/bun" ]; then \
+        ln -sf /root/.bun/bin/bun /usr/local/bin/bun; \
+    elif [ -f "/data/.bun/bin/bun" ]; then \
+        ln -sf /data/.bun/bin/bun /usr/local/bin/bun; \
+    fi && \
+    # Verify bun is accessible
+    bun --version
 
 # Python tools
 RUN pip3 install ipython csvkit openpyxl python-docx pypdf botasaurus browser-use playwright --break-system-packages && \
