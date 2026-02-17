@@ -83,8 +83,10 @@ ENV BUN_INSTALL_NODE=0 \
     BUN_INSTALL="/data/.bun" \
     PATH="/usr/local/go/bin:/data/.bun/bin:/data/.bun/install/global/bin:$PATH"
 
-# Install Bun
-RUN curl -fsSL https://bun.sh/install | bash
+# Create Bun directory and install Bun
+RUN mkdir -p /data/.bun && \
+    curl -fsSL https://bun.sh/install | bash && \
+    ln -s /root/.bun/bin/bun /usr/local/bin/bun || ln -s /data/.bun/bin/bun /usr/local/bin/bun
 
 # Python tools
 RUN pip3 install ipython csvkit openpyxl python-docx pypdf botasaurus browser-use playwright --break-system-packages && \
