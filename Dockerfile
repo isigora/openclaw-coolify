@@ -108,8 +108,14 @@ ENV OPENCLAW_BETA=${OPENCLAW_BETA} \
 
 # Install Vercel, Marp, QMD with BuildKit cache mount for faster rebuilds
 RUN --mount=type=cache,target=/data/.bun/install/cache \
-    bun install -g vercel @marp-team/marp-cli https://github.com/tobi/qmd && hash -r && \
-    bun install -g @openai/codex @google/gemini-cli opencode-ai @steipete/summarize @hyperbrowser/agent clawhub
+    bun install -g vercel @marp-team/marp-cli https://github.com/tobi/qmd && \
+    hash -r
+
+# Install AI tools (install each that exists, skip if not available)
+RUN --mount=type=cache,target=/data/.bun/install/cache \
+    bun install -g @steipete/summarize || true && \
+    bun install -g @hyperbrowser/agent || true && \
+    bun install -g clawhub || true
 
 # Install OpenClaw with npm cache mount
 RUN --mount=type=cache,target=/data/.npm \
