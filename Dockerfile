@@ -79,23 +79,17 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 # Stage 3: Language runtimes and package managers (change sometimes)
 FROM system-tools AS runtimes
 
-ENV BUN_INSTALL_NODE=0 \
-    BUN_INSTALL="/data/.bun" \
-    PATH="/usr/local/go/bin:/data/.bun/bin:/data/.bun/install/global/bin:$PATH"
+ENV BUN_INSTALL="/root/.bun"
 
-# Create Bun directory and install Bun
-RUN mkdir -p /data/.bun && \
-    curl -fsSL https://bun.sh/install | bash && \
-    # Verify Bun installation and create symlink
-    if [ -f "$HOME/.bun/bin/bun" ]; then \
-        ln -sf "$HOME/.bun/bin/bun" /usr/local/bin/bun; \
-    elif [ -f "/root/.bun/bin/bun" ]; then \
-        ln -sf /root/.bun/bin/bun /usr/local/bin/bun; \
-    elif [ -f "/data/.bun/bin/bun" ]; then \
-        ln -sf /data/.bun/bin/bun /usr/local/bin/bun; \
-    fi && \
-    # Verify bun is accessible
-    bun --version
+# Install Bun with explicit PATH setup
+RUN curl -fsSL https://bun.sh/install | bash && \
+    # Add to PATH immediately
+    export PATH="/root/.bun/bin:$PATH" && \
+    # Create symlink for system-wide access
+    ln -sf /root/.bun/bin/bun /usr/local/bin/bun && \
+    ln -sf /root/.bun/bin/bunx /usr/local/bin/bunx && \
+    # Verify installation
+    which bun && bun --version
 
 # Python tools
 RUN pip3 install ipython csvkit openpyxl python-docx pypdf botasaurus browser-use playwright --break-system-packages && \
@@ -162,7 +156,7 @@ RUN ln -sf /data/.claude/bin/claude /usr/local/bin/claude 2>/dev/null || true &&
     chmod +x /app/scripts/*.sh /usr/local/bin/openclaw-approve
 
 # ✅ FINAL PATH (important)
-ENV PATH="/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin:/data/.local/bin:/data/.npm-global/bin:/data/.bun/bin:/data/.bun/install/global/bin:/data/.claude/bin:/data/.kimi/bin"
+ENV PATH="/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin:/data/.local/bin:/data/.npm-global/bin:/root/.bun/bin:/data/.claude/bin:/data/.kimi/bin"
 
 EXPOSE 18789
 CMD ["bash", "/app/scripts/bootstrap.sh"]
