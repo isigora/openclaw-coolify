@@ -49,7 +49,7 @@ FROM base AS runtimes
 ENV BUN_INSTALL="/data/.bun" \
     PATH="/usr/local/go/bin:/data/.bun/bin:/data/.bun/install/global/bin:$PATH"
 
-# Install Bun (allow bun to manage compatible node)
+# Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
 
 # Python tools
@@ -68,7 +68,7 @@ ENV OPENCLAW_BETA=${OPENCLAW_BETA} \
     OPENCLAW_NO_ONBOARD=1 \
     NPM_CONFIG_UNSAFE_PERM=true
 
-# Bun global installs (with cache)
+# Bun global installs
 RUN --mount=type=cache,target=/data/.bun/install/cache \
     bun install -g vercel @marp-team/marp-cli https://github.com/tobi/qmd && \
     bun pm -g untrusted && \
@@ -85,14 +85,15 @@ RUN --mount=type=cache,target=/data/.npm \
     npm install -g openclaw; \
     fi 
 
-# Install uv explicitly
-RUN curl -L https://github.com/azlux/uv/releases/latest/download/uv-linux-x64 -o /usr/local/bin/uv && \
-    chmod +x /usr/local/bin/uv
+# 🛠 UV INSTALLATION FIX (공식 astral 주소로 변경)
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    ln -sf /root/.local/bin/uv /usr/local/bin/uv && \
+    ln -sf /root/.local/bin/uvx /usr/local/bin/uvx
 
-# Claude + Kimi
+# Claude + Kimi 설치 및 검증
 RUN curl -fsSL https://claude.ai/install.sh | bash && \
     curl -L https://code.kimi.com/install.sh | bash && \
-    command -v uv
+    /usr/local/bin/uv --version
 
 # Make sure uv and other local bins are available
 ENV PATH="/root/.local/bin:${PATH}"
@@ -101,6 +102,9 @@ ENV PATH="/root/.local/bin:${PATH}"
 # Stage 4: Final
 ########################################
 FROM dependencies AS final
+
+# 강제 재빌드를 위한 주석 (빌드 실패 시 날짜를 바꿔주세요)
+# Build Date: 2026-02-26-v1
 
 WORKDIR /app
 COPY . .
