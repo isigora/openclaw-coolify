@@ -8,8 +8,9 @@ FROM node:20-bookworm-slim AS base
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_ROOT_USER_ACTION=ignore
 
-# Core packages + build tools
+# Core packages + build tools + docker-cli(추가)
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    docker.io \
     curl \
     wget \
     git \
@@ -85,7 +86,7 @@ RUN --mount=type=cache,target=/data/.npm \
     npm install -g openclaw; \
     fi 
 
-# 🛠 UV INSTALLATION FIX (공식 astral 주소로 변경)
+# 🛠 UV INSTALLATION FIX
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     ln -sf /root/.local/bin/uv /usr/local/bin/uv && \
     ln -sf /root/.local/bin/uvx /usr/local/bin/uvx
@@ -103,8 +104,8 @@ ENV PATH="/root/.local/bin:${PATH}"
 ########################################
 FROM dependencies AS final
 
-# 강제 재빌드를 위한 주석 (빌드 실패 시 날짜를 바꿔주세요)
-# Build Date: 2026-02-26-v1
+# 강제 재빌드를 위한 주석 업데이트
+# Build Date: 2026-02-26-v2-dind-fixed
 
 WORKDIR /app
 COPY . .
